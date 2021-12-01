@@ -4,6 +4,7 @@ import 'package:miseo/presentation/login/login.dart';
 import 'package:miseo/presentation/main/main_view.dart';
 import 'package:miseo/presentation/onboarding/onboarding.dart';
 import 'package:miseo/presentation/register/register.dart';
+import 'package:miseo/presentation/resources/strings_manager.dart';
 import 'package:miseo/presentation/splash/splash.dart';
 import 'package:miseo/presentation/store_details/store_details.dart';
 
@@ -43,10 +44,10 @@ class RouteGenerator {
     return MaterialPageRoute(
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: Text("No Route Found"),
+          title: Text(AppStrings.noRouteFound),
         ),
         body: Center(
-          child: Text("No Route Found"),
+          child: Text(AppStrings.noRouteFound),
         ),
       ),
     );
