@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:miseo/presentation/color_manager.dart';
-import 'package:miseo/presentation/font_manager.dart';
-import 'package:miseo/presentation/styles_manager.dart';
-import 'package:miseo/presentation/values_manager.dart';
+import 'package:miseo/presentation/resources/color_manager.dart';
+import 'package:miseo/presentation/resources/font_manager.dart';
+import 'package:miseo/presentation/resources/styles_manager.dart';
+import 'package:miseo/presentation/resources/values_manager.dart';
 
 ThemeData getApplicationTheme() {
   return ThemeData(
