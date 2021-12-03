@@ -31,13 +31,101 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             AppStrings.onBoardingSubTitle4, ImageAssets.onboardingLogo4),
       ];
 
+  Widget _getProperCircle(int index) {
+    if (index == _currentIndex) {
+      return SvgPicture.asset(ImageAssets.hollowCircleIc); //selected slider
+    } else {
+      return SvgPicture.asset(ImageAssets.solidCircleIc); // unselected slider
+    }
+  }
+
+  int _getPreviousIndex() {
+    _currentIndex--;
+    int previousIndex = _currentIndex;
+    if (previousIndex == -1) {
+      _currentIndex =
+          _list.length - 1; // infinite loop to go to the length of slider list
+    }
+    return _currentIndex;
+  }
+
+  int _getNextIndex() {
+    _currentIndex ++;
+    int nextIndex = _currentIndex;
+    if (nextIndex >= _list.length) {
+      _currentIndex = 0; // infinite loop to go to the first item of slider list
+    }
+    return _currentIndex;
+  }
+
+  Widget _getBottomSheetWidget() {
+    return Container(
+      color: ColorManager.primary,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          //left Arrow
+          Padding(
+            padding: EdgeInsets.all(
+              AppPadding.p14,
+            ),
+            child: GestureDetector(
+              child: SizedBox(
+                height: AppSize.s20,
+                width: AppSize.s20,
+                child: SvgPicture.asset(ImageAssets.leftArrowIc),
+              ),
+              onTap: () {
+                //go to previous slide
+                _pageController.animateToPage(_getPreviousIndex(),
+                    duration: Duration(microseconds: DurationConstant.d300),
+                    curve: Curves.bounceInOut);
+              },
+            ),
+          ),
+
+          // circles indicator
+          Row(
+            children: [
+              for (int i = 0; i < _list.length; i++)
+                Padding(
+                  padding: EdgeInsets.all(AppPadding.p8),
+                  child: _getProperCircle(i),
+                ),
+            ],
+          ),
+
+          //Right Arrow
+          Padding(
+            padding: EdgeInsets.all(
+              AppPadding.p14,
+            ),
+            child: GestureDetector(
+              child: SizedBox(
+                height: AppSize.s20,
+                width: AppSize.s20,
+                child: SvgPicture.asset(ImageAssets.rightArrowIc),
+              ),
+              onTap: () {
+                //go to next slide
+                _pageController.animateToPage(_getNextIndex(),
+                    duration: Duration(microseconds: DurationConstant.d300),
+                    curve: Curves.bounceInOut);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
         backgroundColor: ColorManager.white,
-        elevation: AppSize.s1_5,
+        elevation: AppSize.s0,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: ColorManager.white,
           statusBarBrightness: Brightness.dark,
@@ -64,14 +152,18 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  // go to login screen
+                },
                 child: Text(
                   AppStrings.skip,
                   textAlign: TextAlign.end,
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
               ),
             ),
             // add Layout for indicator and arrows
+            _getBottomSheetWidget(),
           ],
         ),
       ),
@@ -80,7 +172,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 }
 
 class OnBoardingPage extends StatelessWidget {
-  SliderObject _sliderObject;
+  final SliderObject _sliderObject;
   OnBoardingPage(this._sliderObject, {Key? key}) : super(key: key);
 
   @override
