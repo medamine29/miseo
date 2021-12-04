@@ -1,11 +1,11 @@
 import 'package:miseo/data/data_source/remote_data_source.dart';
 import 'package:miseo/data/network/error_handler.dart';
 import 'package:miseo/data/network/network_info.dart';
-import 'package:miseo/domain/model.dart';
+import 'package:miseo/domain/model/model.dart';
 import 'package:miseo/data/requests/request.dart';
 import 'package:miseo/data/network/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:miseo/domain/repository.dart';
+import 'package:miseo/domain/repository/repository.dart';
 import 'package:miseo/data/mapper/mapper.dart';
 
 class RepositoryImpl extends Repository {

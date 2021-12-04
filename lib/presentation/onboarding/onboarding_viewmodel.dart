@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:miseo/domain/model.dart';
+import 'package:miseo/domain/model/model.dart';
 import 'package:miseo/presentation/base/baseviewmodel.dart';
 import 'package:miseo/presentation/resources/assets_manager.dart';
 import 'package:miseo/presentation/resources/strings_manager.dart';

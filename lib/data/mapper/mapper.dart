@@ -2,7 +2,7 @@
 
 import 'package:miseo/app/extensions.dart';
 import 'package:miseo/data/responses/responses.dart';
-import 'package:miseo/domain/model.dart';
+import 'package:miseo/domain/model/model.dart';
 
 const EMPTY = "";
 const ZERO = 0;
