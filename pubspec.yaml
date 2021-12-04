@@ -32,6 +32,7 @@ dependencies:
   pretty_dio_logger: ^1.1.0
   json_serializable: ^4.1.4
   data_connection_checker: ^0.3.4
+  freezed: ^0.14.2
   #either
   dartz: ^0.10.0
   #local storage
