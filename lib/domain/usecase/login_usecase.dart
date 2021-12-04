@@ -1,3 +1,4 @@
+import 'package:miseo/app/functions.dart';
 import 'package:miseo/data/network/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:miseo/data/requests/request.dart';
@@ -12,7 +13,9 @@ class LoginUseCase implements BaseUseCase<LoginUseCaseInput,Authentication>{
 
   @override
   Future<Either<Failure, Authentication>> execute(LoginUseCaseInput input) async {
-    await _repository.login(LoginRequest(input.email, input.password, "imei", "deviceType"));
+
+    DeviceInfo deviceInfo = await getDeviceDetails();
+    return await _repository.login(LoginRequest(input.email, input.password, deviceInfo.identifier, deviceInfo.name));
   }
   
 }
