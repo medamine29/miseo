@@ -1,3 +1,8 @@
+import 'package:dio/dio.dart';
+import 'package:miseo/data/network/failure.dart';
+
+import 'failure.dart';
+
 enum DataSource {
   SUCCESS,
   NO_CONTENT,
@@ -11,7 +16,89 @@ enum DataSource {
   RECEIVE_TIMEOUT,
   SEND_TIMEOUT,
   CACHE_ERROR,
-  NO_INTERNET_CONNECTION
+  NO_INTERNET_CONNECTION,
+  DEFAULT
+}
+
+class ErrorHandler implements Exception{
+  late Failure failure;
+
+  ErrorHandler.handle(dynamic error){
+    if(error is DioError){
+      //dio error -> error from response
+      failure = _handleError(error);
+    }else{
+      //default error
+      failure = DataSource.DEFAULT.getFailure();
+
+    }
+  }
+
+  Failure _handleError(DioError error){
+    switch(error.type){
+      
+      case DioErrorType.connectTimeout:
+        return DataSource.CONNECT_TIMEOUT.getFailure();
+      case DioErrorType.sendTimeout:
+        return DataSource.SEND_TIMEOUT.getFailure();
+      case DioErrorType.receiveTimeout:
+        return DataSource.RECEIVE_TIMEOUT.getFailure();
+      case DioErrorType.response:
+        switch(error.response?.statusCode){
+          case ResponseCode.BAD_REQUEST:
+            return DataSource.BAD_REQUEST.getFailure();
+          case ResponseCode.FORBIDDEN:
+            return DataSource.FORBIDDEN.getFailure();
+          case ResponseCode.UNAUTHORIZED:
+            return DataSource.UNAUTHORIZED.getFailure();
+          case ResponseCode.NOT_FOUND:
+            return DataSource.NOT_FOUND.getFailure();
+          case ResponseCode.INTERNAL_SERVER_ERR:
+            return DataSource.INTERNAL_SERVER_ERR.getFailure();
+          default:
+            return DataSource.DEFAULT.getFailure();
+        }
+      case DioErrorType.cancel:
+        return DataSource.CANCEL.getFailure();
+      case DioErrorType.other:
+        return DataSource.DEFAULT.getFailure();
+    }
+  }
+
+  }
+
+
+extension DataSourceExtension on DataSource {
+  Failure getFailure() {
+    switch (this) {
+      case DataSource.BAD_REQUEST:
+        return Failure(ResponseCode.BAD_REQUEST, ResponseMessage.BAD_REQUEST);
+      case DataSource.FORBIDDEN:
+        return Failure(ResponseCode.FORBIDDEN, ResponseMessage.FORBIDDEN);
+      case DataSource.UNAUTHORIZED:
+        return Failure(ResponseCode.UNAUTHORIZED, ResponseMessage.UNAUTHORIZED);
+      case DataSource.NOT_FOUND:
+        return Failure(ResponseCode.NOT_FOUND, ResponseMessage.NOT_FOUND);
+      case DataSource.INTERNAL_SERVER_ERR:
+        return Failure(ResponseCode.INTERNAL_SERVER_ERR, ResponseMessage.INTERNAL_SERVER_ERR);
+      case DataSource.CONNECT_TIMEOUT:
+        return Failure(ResponseCode.CONNECT_TIMEOUT, ResponseMessage.CONNECT_TIMEOUT);
+      case DataSource.CANCEL:
+        return Failure(ResponseCode.CANCEL, ResponseMessage.CANCEL);
+      case DataSource.RECEIVE_TIMEOUT:
+        return Failure(ResponseCode.RECEIVE_TIMEOUT, ResponseMessage.RECEIVE_TIMEOUT);
+      case DataSource.SEND_TIMEOUT:
+        return Failure(ResponseCode.SEND_TIMEOUT, ResponseMessage.SEND_TIMEOUT);
+      case DataSource.CACHE_ERROR:
+        return Failure(ResponseCode.CACHE_ERROR, ResponseMessage.CACHE_ERROR);
+      case DataSource.NO_INTERNET_CONNECTION:
+        return Failure(ResponseCode.NO_INTERNET_CONNECTION, ResponseMessage.NO_INTERNET_CONNECTION);
+      case DataSource.DEFAULT:
+        return Failure(ResponseCode.DEFAULT, ResponseMessage.DEFAULT);
+      default:
+        return Failure(ResponseCode.DEFAULT,ResponseMessage.DEFAULT);
+    }
+  }
 }
 
 class ResponseCode {
@@ -27,7 +114,7 @@ class ResponseCode {
       500; //Failure, crash happend in server site
 
   //LOCAL STATUS CODES
-  static const int UNKNOWN = -1;
+  static const int DEFAULT = -1;
   static const int CONNECT_TIMEOUT = -2;
   static const int CANCEL = -3;
   static const int RECEIVE_TIMEOUT = -4;
@@ -53,7 +140,7 @@ class ResponseMessage {
       "something went wrong, try again later"; //Failure, crash happend in server site
 
   //LOCAL STATUS CODES
-  static const String UNKNOWN = "something went wrong, try again later";
+  static const String DEFAULT = "something went wrong, try again later";
   static const String CONNECT_TIMEOUT = "time out error, try again later";
   static const String CANCEL = "request was cancelled, try again later";
   static const String RECEIVE_TIMEOUT = "time out error, try again later";
