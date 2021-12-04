@@ -34,6 +34,8 @@ dependencies:
   data_connection_checker: ^0.3.4
   #either
   dartz: ^0.10.0
+  #local storage
+  shared_preferences: ^2.0.8
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
