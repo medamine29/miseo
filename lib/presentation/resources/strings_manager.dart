@@ -1,4 +1,5 @@
 class AppStrings {
+  //On boarding view
   static const String noRouteFound = "No Route Found";
 
   static const String onBoardingTitle1 = "SEE THE BEST COURSE #1";
@@ -16,4 +17,15 @@ class AppStrings {
       "Tut App is an awesome flutter application using clean architecture #4s";
 
   static const String skip = "Skip";
+
+  //login view
+  static const String username = "Username";
+  static const String usernameError = "Username is wrong";
+  static const String password = "Password";
+  static const String passwordError = "Password is wrong";
+  static const String login = "Login";
+  static const String forgetPassword = "Forgot password";
+  static const String registerText = "Not a member ? Sign up";
+  
+
 }
