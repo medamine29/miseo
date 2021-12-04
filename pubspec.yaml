@@ -30,6 +30,7 @@ dependencies:
   analyzer: ^1.7.0
   dio: ^4.0.0
   json_serializable: ^4.1.4
+  data_connection_checker: ^0.3.4
   #either
   dartz: ^0.10.0
 
