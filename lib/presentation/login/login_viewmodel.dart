@@ -55,7 +55,7 @@ class LoginViewModel extends BaseViewModel
 
   @override
   login() async {
-   /* (await _loginUseCase.execute(
+    /* (await _loginUseCase.execute(
             LoginUseCaseInput(loginObject.userName, loginObject.password)))
         .fold(
             (failure) => {
@@ -78,9 +78,10 @@ class LoginViewModel extends BaseViewModel
   Stream<bool> get outputIsUserNameValid => _userNameStreamController.stream
       .map((username) => _isUserNameValid(username));
 
-  
   @override
-  Stream<bool> get outputAreAllInputsValid => _areAllInputsValidStreamController.stream.map((_) => _areAllInputsValid());
+  Stream<bool> get outputAreAllInputsValid =>
+      _areAllInputsValidStreamController.stream
+          .map((_) => _areAllInputsValid());
 
   //private functions
   bool _isPasswordValid(String password) {
@@ -89,16 +90,16 @@ class LoginViewModel extends BaseViewModel
 
   bool _isUserNameValid(String username) {
     return username.isNotEmpty;
-  } 
-
-  bool _areAllInputsValid(){
-    return (_isPasswordValid(loginObject.password) && _isUserNameValid(loginObject.userName));
   }
 
-  _validate(){
+  bool _areAllInputsValid() {
+    return (_isPasswordValid(loginObject.password) &&
+        _isUserNameValid(loginObject.userName));
+  }
+
+  _validate() {
     inputAreAllInputsValid.add(null);
   }
-
 }
 
 abstract class LoginViewModelInputs {

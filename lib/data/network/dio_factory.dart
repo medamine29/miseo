@@ -10,39 +10,34 @@ const String ACCEPT = "accept";
 const String AUTHORIZATION = "authorization";
 const String DEFAULT_LANGUAGE = "language";
 
-class DioFactory{
-
+class DioFactory {
   AppPreferences _appPreferences;
   DioFactory(this._appPreferences);
 
   Future<Dio> getDio() async {
     //declaring params for dio options
     Dio dio = Dio();
-    int _timeOut = 60*1000; // 1 min
+    int _timeOut = 60 * 1000; // 1 min
     String language = await _appPreferences.getAppLanguage();
 
-    Map<String,String> headers = {
-      CONTENT_TYPE:APPLICATION_JSON,
-      ACCEPT:APPLICATION_JSON,
+    Map<String, String> headers = {
+      CONTENT_TYPE: APPLICATION_JSON,
+      ACCEPT: APPLICATION_JSON,
       AUTHORIZATION: Constant.token,
-      DEFAULT_LANGUAGE: language 
+      DEFAULT_LANGUAGE: language
     };
 
     dio.options = BaseOptions(
-      baseUrl: Constant.baseUrl,
-      connectTimeout: _timeOut,
-      receiveTimeout: _timeOut,
-      headers: headers
-    );
+        baseUrl: Constant.baseUrl,
+        connectTimeout: _timeOut,
+        receiveTimeout: _timeOut,
+        headers: headers);
 
-    if(kReleaseMode){
+    if (kReleaseMode) {
       print("release mode no logs");
-    }else{
+    } else {
       dio.interceptors.add(PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseHeader: true
-      ));
+          requestHeader: true, requestBody: true, responseHeader: true));
     }
 
     return dio;

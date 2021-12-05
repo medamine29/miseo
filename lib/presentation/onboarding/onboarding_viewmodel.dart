@@ -7,7 +7,6 @@ import 'package:miseo/presentation/resources/strings_manager.dart';
 
 class OnBoardingViewModel extends BaseViewModel
     with OnBoardingViewModelInputs, OnBoardingViewModelOutputs {
-
   //stream controllers
   final StreamController _streamController =
       StreamController<SliderViewObject>();

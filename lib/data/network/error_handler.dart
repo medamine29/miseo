@@ -20,23 +20,21 @@ enum DataSource {
   DEFAULT
 }
 
-class ErrorHandler implements Exception{
+class ErrorHandler implements Exception {
   late Failure failure;
 
-  ErrorHandler.handle(dynamic error){
-    if(error is DioError){
+  ErrorHandler.handle(dynamic error) {
+    if (error is DioError) {
       //dio error -> error from response
       failure = _handleError(error);
-    }else{
+    } else {
       //default error
       failure = DataSource.DEFAULT.getFailure();
-
     }
   }
 
-  Failure _handleError(DioError error){
-    switch(error.type){
-      
+  Failure _handleError(DioError error) {
+    switch (error.type) {
       case DioErrorType.connectTimeout:
         return DataSource.CONNECT_TIMEOUT.getFailure();
       case DioErrorType.sendTimeout:
@@ -44,7 +42,7 @@ class ErrorHandler implements Exception{
       case DioErrorType.receiveTimeout:
         return DataSource.RECEIVE_TIMEOUT.getFailure();
       case DioErrorType.response:
-        switch(error.response?.statusCode){
+        switch (error.response?.statusCode) {
           case ResponseCode.BAD_REQUEST:
             return DataSource.BAD_REQUEST.getFailure();
           case ResponseCode.FORBIDDEN:
@@ -64,9 +62,7 @@ class ErrorHandler implements Exception{
         return DataSource.DEFAULT.getFailure();
     }
   }
-
-  }
-
+}
 
 extension DataSourceExtension on DataSource {
   Failure getFailure() {
@@ -80,23 +76,27 @@ extension DataSourceExtension on DataSource {
       case DataSource.NOT_FOUND:
         return Failure(ResponseCode.NOT_FOUND, ResponseMessage.NOT_FOUND);
       case DataSource.INTERNAL_SERVER_ERR:
-        return Failure(ResponseCode.INTERNAL_SERVER_ERR, ResponseMessage.INTERNAL_SERVER_ERR);
+        return Failure(ResponseCode.INTERNAL_SERVER_ERR,
+            ResponseMessage.INTERNAL_SERVER_ERR);
       case DataSource.CONNECT_TIMEOUT:
-        return Failure(ResponseCode.CONNECT_TIMEOUT, ResponseMessage.CONNECT_TIMEOUT);
+        return Failure(
+            ResponseCode.CONNECT_TIMEOUT, ResponseMessage.CONNECT_TIMEOUT);
       case DataSource.CANCEL:
         return Failure(ResponseCode.CANCEL, ResponseMessage.CANCEL);
       case DataSource.RECEIVE_TIMEOUT:
-        return Failure(ResponseCode.RECEIVE_TIMEOUT, ResponseMessage.RECEIVE_TIMEOUT);
+        return Failure(
+            ResponseCode.RECEIVE_TIMEOUT, ResponseMessage.RECEIVE_TIMEOUT);
       case DataSource.SEND_TIMEOUT:
         return Failure(ResponseCode.SEND_TIMEOUT, ResponseMessage.SEND_TIMEOUT);
       case DataSource.CACHE_ERROR:
         return Failure(ResponseCode.CACHE_ERROR, ResponseMessage.CACHE_ERROR);
       case DataSource.NO_INTERNET_CONNECTION:
-        return Failure(ResponseCode.NO_INTERNET_CONNECTION, ResponseMessage.NO_INTERNET_CONNECTION);
+        return Failure(ResponseCode.NO_INTERNET_CONNECTION,
+            ResponseMessage.NO_INTERNET_CONNECTION);
       case DataSource.DEFAULT:
         return Failure(ResponseCode.DEFAULT, ResponseMessage.DEFAULT);
       default:
-        return Failure(ResponseCode.DEFAULT,ResponseMessage.DEFAULT);
+        return Failure(ResponseCode.DEFAULT, ResponseMessage.DEFAULT);
     }
   }
 }
@@ -150,8 +150,7 @@ class ResponseMessage {
       "Please check your internet connection";
 }
 
-class ApiInternalStatus{
+class ApiInternalStatus {
   static const int SUCCESS = 0;
   static const int FAILURE = -1;
-  
 }

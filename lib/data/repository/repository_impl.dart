@@ -29,10 +29,8 @@ class RepositoryImpl extends Repository {
           return Right(response.toDomain());
         } else {
           //return business logic error
-          return Left(Failure(
-              response.status ?? ApiInternalStatus.FAILURE,
-              response.message ??
-                  ResponseMessage.DEFAULT));
+          return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
+              response.message ?? ResponseMessage.DEFAULT));
         }
       } catch (error) {
         return Left(ErrorHandler.handle(error).failure);
