@@ -15,7 +15,7 @@ class LoginViewModel extends BaseViewModel
 
   var loginObject = LoginObject("", "");
 
-  LoginUseCase? _loginUseCase; //TODO: remove nullable
+  LoginUseCase _loginUseCase;
   LoginViewModel(this._loginUseCase);
 
   @override
@@ -55,7 +55,7 @@ class LoginViewModel extends BaseViewModel
 
   @override
   login() async {
-    /* (await _loginUseCase.execute(
+    (await _loginUseCase.execute(
             LoginUseCaseInput(loginObject.userName, loginObject.password)))
         .fold(
             (failure) => {
@@ -65,7 +65,7 @@ class LoginViewModel extends BaseViewModel
             (data) => {
                   //right -> Success --> data
                   print(data.customer?.name)
-                });*/
+                });
   }
 
   //outputs
