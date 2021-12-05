@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:miseo/data/mapper/mapper.dart';
@@ -15,7 +13,7 @@ enum StateRendererType {
   //POPUP STATES
   POPUP_LOADING_STATE,
   POPUP_ERROR_STATE,
-
+ 
   //FULLSCREEN STATES
   FULL_SCREEN_LOADING_STATE,
   FULL_SCREEN_ERROR_STATE,
@@ -26,7 +24,6 @@ enum StateRendererType {
 
 class StateRenderer extends StatelessWidget {
   StateRendererType stateRendererType;
-  Failure failure;
   String message;
   String title;
   Function? retryActionFunction;
@@ -40,7 +37,6 @@ class StateRenderer extends StatelessWidget {
       required this.retryActionFunction})
       : message = message ?? AppStrings.loading,
         title = title ?? EMPTY,
-        failure = failure ?? DefaultFailure(),
         super(key: key);
 
   @override
@@ -57,7 +53,7 @@ class StateRenderer extends StatelessWidget {
       case StateRendererType.FULL_SCREEN_LOADING_STATE:
         return _getItemsInColumn([_getAnimatedImage(JsonAssets.loading),_getMessage(message)]);
       case StateRendererType.FULL_SCREEN_ERROR_STATE:
-        return _getItemsInColumn([_getAnimatedImage(JsonAssets.error),_getMessage(failure.message),_getRetryButton( AppStrings.retryAgain,context)]);
+        return _getItemsInColumn([_getAnimatedImage(JsonAssets.error),_getMessage(message),_getRetryButton( AppStrings.retryAgain,context)]);
       case StateRendererType.CONTENT_SCREEN_STATE:
         return Container();
       case StateRendererType.EMPTY_SCREEN_STATE:
