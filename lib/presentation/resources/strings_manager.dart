@@ -26,4 +26,10 @@ class AppStrings {
   static const String login = "Login";
   static const String forgetPassword = "Forgot password";
   static const String registerText = "Not a member ? Sign up";
+
+  //State Renderer
+  static const String loading = "Loading..."; 
+  static const String retryAgain = "Retry Again"; 
+  static const String ok = "Ok";
+
 }
