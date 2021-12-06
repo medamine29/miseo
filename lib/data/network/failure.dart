@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:miseo/data/network/error_handler.dart';
 
 class Failure {

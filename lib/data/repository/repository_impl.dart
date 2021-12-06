@@ -22,8 +22,8 @@ class RepositoryImpl extends Repository {
         //user have connection -> call api
         final response = await _remoteDataSource.login(loginRequest);
 
-        if (response.status == ApiInternalStatus.SUCCESS) //sucess
-        {
+        if (response.status == ApiInternalStatus.SUCCESS) //sucess 
+        { 
           //return data
           //return right
           return Right(response.toDomain());
@@ -33,6 +33,7 @@ class RepositoryImpl extends Repository {
               response.message ?? ResponseMessage.DEFAULT));
         }
       } catch (error) {
+        print("Error Stack : "+error.toString());
         return Left(ErrorHandler.handle(error).failure);
       }
     } else {

@@ -48,7 +48,7 @@ class ContactsResponse {
 }
 
 @JsonSerializable()
-class AuthenticationResponse extends BaseResponse {
+class AuthenticationResponse extends BaseResponse{
   @JsonKey(name: "customer")
   CustomerResponse? customer;
   @JsonKey(name: "contacts")
